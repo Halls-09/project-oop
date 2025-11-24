@@ -1,3 +1,6 @@
+#ifndef OOP_PROJECT_LINEAR_H
+#define OOP_PROJECT_LINEAR_H
+
 
 template<typename T>
 
@@ -6,19 +9,19 @@ class vector {
     T* mData;
     size_t mCap;
     size_t mSize;
-    void expandCapacity(size_t cap){ // ขยาย capacity
-        T* arr = new T[cap];
+    void expandCapacity(size_t usercap){ // ขยาย capacity
+        T* arr = new T[usercap];
         for(size_t i = 0;i < mSize;i++){
             arr[i] = mData[i];
         }
         delete[] mData;
         mData = arr;
-        mCap = cap;
+        mCap = usercap;
     };
 
-    void CheckCapacity(size_t cap){ // check capacity ว่า User ขอเท่าไหร่
-        if(cap > mCap){
-            size_t newcap = (cap > mCap * 2) ? cap : mCap * 2;
+    void CheckCapacity(size_t usercap){ // check capacity ว่า User ขอเท่าไหร่
+        if(usercap > mCap){
+            size_t newcap = (usercap > mCap * 2) ? usercap : mCap * 2;
             expandCapacity(newcap);
         }
     };
@@ -48,22 +51,36 @@ class vector {
         mCap = a.cap();
         mSize = a.size();
         for(size_t i = 0;i < a.size();i++){
-            mData[i] = a[i];
+            mData[i] = a.mData[i];
         }
     };
 
-    vector<T> operator=(vector<T> &other){ // assignment operator
+    vector<T> operator=(const vector<T> &other){ // assignment operator
         if(mData != other.mData){
             delete[] mData;
             mData = new T[other.cap()]();
             mCap = other.cap();
             mSize = other.size();
             for(size_t i = 0;i < other.size();i++){
-                mData[i] = other[i];
+                mData[i] = other.mData[i];
             }
         }
+        return *this;
 
     };
+    T& operator[](size_t i) {
+    return mData[i];
+    };
+
+    const T& operator[](size_t i) const {
+    return mData[i];
+    }
+
+
+    size_t cap() const{
+    return mCap;
+    }
+
 
     void push_back(const T& value){
         CheckCapacity(mSize + 1);
@@ -79,7 +96,7 @@ class vector {
         mSize = 0;
     };
 
-    void size(){
+    size_t size() const {
         return mSize;
     };
 
@@ -108,7 +125,7 @@ class vector {
 };
 
 
-
+// ===== stack ===== //
 template<typename T>
 
 class stack{
@@ -116,19 +133,19 @@ class stack{
     T* mData;
     size_t mCap;
     size_t mSize;
-    void expandCapacity(size_t cap){ // ขยาย capacity
-        T* arr = new T[cap];
+    void expandCapacity(size_t usercap){ // ขยาย capacity
+        T* arr = new T[usercap];
         for(size_t i = 0;i < mSize;i++){
             arr[i] = mData[i];
         }
         delete[] mData;
         mData = arr;
-        mCap = cap;
+        mCap = usercap;
     };
 
-    void CheckCapacity(size_t cap){ // check capacity ว่า User ขอเท่าไหร่
-        if(cap > mCap){
-            size_t newcap = (cap > mCap * 2) ? cap : mCap * 2;
+    void CheckCapacity(size_t usercap){ // check capacity ว่า User ขอเท่าไหร่
+        if(usercap > mCap){
+            size_t newcap = (usercap > mCap * 2) ? usercap : mCap * 2;
             expandCapacity(newcap);
         }
     };
@@ -149,22 +166,35 @@ class stack{
         mCap = a.cap();
         mSize = a.size();
         for(size_t i = 0;i < a.size();i++){
-            mData[i] = a[i];
+            mData[i] = a.mData[i];
         }
     };
 
-    stack<T> operator=(stack<T> &other){ // assignment operator
+    stack<T> operator=(const stack<T> &other){ // assignment operator
         if(mData != other.mData){
             delete[] mData;
             mData = new T[other.cap()]();
             mCap = other.cap();
             mSize = other.size();
             for(size_t i = 0;i < other.size();i++){
-                mData[i] = other[i];
+                mData[i] = other.mData[i];
             }
         }
+        return *this;
 
     };
+    T& operator[](size_t i) {
+    return mData[i];
+    }
+
+    const T& operator[](size_t i) const {
+    return mData[i];
+    }
+
+
+    size_t cap()  const{
+    return mCap;
+    }
 
     const T& top() const{
         return mData[mSize - 1];
@@ -180,7 +210,7 @@ class stack{
         mSize--;
     };
 
-     void size(){
+    size_t size() const{
         return mSize;
     };
 
@@ -190,5 +220,6 @@ class stack{
 
 };
 
+#endif //OOP_PROJECT_LINEAR_H
 
 
